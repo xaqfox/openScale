@@ -28,6 +28,7 @@
     <string name="label_bmi">Body mass index (BMI)</string>
     <string name="label_bmr">Basal metabolic rate (BMR)</string>
     <string name="label_tdee">Total daily energy expenditure (TDEE)</string>
+    <string name="label_eer">Estimated Energy Requirement (EER)</string>
     <string name="label_fat">Body fat</string>
     <string name="label_water">Total body water</string>
     <string name="label_muscle">Muscle</string>
