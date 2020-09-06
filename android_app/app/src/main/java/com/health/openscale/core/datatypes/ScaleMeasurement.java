@@ -440,10 +440,10 @@ public class ScaleMeasurement implements Cloneable {
         }
 
         if (scaleUser.getGender().isMale()) {
-            eer = (662f - (9.53f * scaleUser.getAge())) + factor * ((15.91f * weight) + (539.6f * scaleUser.getBodyHeight()));
+            eer = (662f - (9.53f * scaleUser.getAge())) + factor * ((15.91f * weight) + (539.6f * scaleUser.getBodyHeight()/100f));
         }
         else {
-            eer = (354f - (6.91f * scaleUser.getAge())) + factor * ((9.36f * weight) + (726f * scaleUser.getBodyHeight()));
+            eer = (354f - (6.91f * scaleUser.getAge())) + factor * ((9.36f * weight) + (726f * scaleUser.getBodyHeight()/100f));
         }
 
         return eer;
