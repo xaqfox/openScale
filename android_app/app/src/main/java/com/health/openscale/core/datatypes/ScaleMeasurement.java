@@ -16,6 +16,7 @@
 
 package com.health.openscale.core.datatypes;
 
+import com.health.openscale.core.utils.Converters;
 import com.health.openscale.core.utils.CsvHelper;
 import com.j256.simplecsv.common.CsvColumn;
 
@@ -415,6 +416,68 @@ public class ScaleMeasurement implements Cloneable {
         }
 
         return factor * getBMR(scaleUser);
+    }
+
+    public float getEER(ScaleUser scaleUser) {
+        // Institute of Medicine Equation for Estimated Energy Requirement (EER)
+        // https://www.nal.usda.gov/sites/default/files/fnic_uploads/energy_full_report.pdf (p185)
+        float eer;
+        float factor;
+
+        switch (scaleUser.getActivityLevel()) {
+            case MILD:
+                factor = scaleUser.getGender().isMale() ? 1.11f : 1.12f;
+                break;
+            case MODERATE:
+                factor = scaleUser.getGender().isMale() ? 1.25f : 1.27f;
+                break;
+            case HEAVY:
+            case EXTREME:
+                factor = scaleUser.getGender().isMale() ? 1.48f : 1.45f;
+                break;
+            default:
+                factor = 1.0f;
+        }
+
+        if (scaleUser.getGender().isMale()) {
+            eer = (662f - (9.53f * scaleUser.getAge())) + factor * ((15.91f * weight) + (539.6f * scaleUser.getBodyHeight()/100f));
+        }
+        else {
+            eer = (354f - (6.91f * scaleUser.getAge())) + factor * ((9.36f * weight) + (726f * scaleUser.getBodyHeight()/100f));
+        }
+
+        return eer;
+    }
+
+    public float getTEE(ScaleUser scaleUser) {
+        // Institute of Medicine Equation for Total Energy Expenditure (TEE)
+        // https://www.nal.usda.gov/sites/default/files/fnic_uploads/energy_full_report.pdf (p204)
+        float tee;
+        float factor;
+
+        switch (scaleUser.getActivityLevel()) {
+            case MILD:
+                factor = scaleUser.getGender().isMale() ? 1.12f : 1.14f;
+                break;
+            case MODERATE:
+                factor = 1.27f;
+                break;
+            case HEAVY:
+            case EXTREME:
+                factor = scaleUser.getGender().isMale() ? 1.54f : 1.45f;
+                break;
+            default:
+                factor = 1.0f;
+        }
+
+        if (scaleUser.getGender().isMale()) {
+            tee = (864f - (9.72f * scaleUser.getAge())) + factor * ((14.2f * weight) + (503f * scaleUser.getBodyHeight()/100f));
+        }
+        else {
+            tee = (387f - (7.31f * scaleUser.getAge())) + factor * ((10.9f * weight) + (660.7f * scaleUser.getBodyHeight()/100f));
+        }
+
+        return tee;
     }
 
     public float getWHtR(float body_height) {
