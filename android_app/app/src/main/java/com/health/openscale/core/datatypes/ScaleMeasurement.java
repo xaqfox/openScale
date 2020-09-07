@@ -449,6 +449,37 @@ public class ScaleMeasurement implements Cloneable {
         return eer;
     }
 
+    public float getTEE(ScaleUser scaleUser) {
+        // Institute of Medicine Equation for Total Energy Expenditure (TEE)
+        // https://www.nal.usda.gov/sites/default/files/fnic_uploads/energy_full_report.pdf (p204)
+        float tee;
+        float factor;
+
+        switch (scaleUser.getActivityLevel()) {
+            case MILD:
+                factor = scaleUser.getGender().isMale() ? 1.12f : 1.14f;
+                break;
+            case MODERATE:
+                factor = 1.27f;
+                break;
+            case HEAVY:
+            case EXTREME:
+                factor = scaleUser.getGender().isMale() ? 1.54f : 1.45f;
+                break;
+            default:
+                factor = 1.0f;
+        }
+
+        if (scaleUser.getGender().isMale()) {
+            tee = (864f - (9.72f * scaleUser.getAge())) + factor * ((14.2f * weight) + (503f * scaleUser.getBodyHeight()/100f));
+        }
+        else {
+            tee = (387f - (7.31f * scaleUser.getAge())) + factor * ((10.9f * weight) + (660.7f * scaleUser.getBodyHeight()/100f));
+        }
+
+        return tee;
+    }
+
     public float getWHtR(float body_height) {
         return waist / body_height;
     }

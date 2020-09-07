@@ -147,6 +147,7 @@ public class MeasurementViewSettings {
             case BMRMeasurementView.KEY:
             case TDEEMeasurementView.KEY:
             case EERMeasurementView.KEY:
+            case TEEMeasurementView.KEY:
             case CaloriesMeasurementView.KEY:
                 defaultValue = true;
                 break;

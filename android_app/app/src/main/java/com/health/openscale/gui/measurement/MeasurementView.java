@@ -130,6 +130,7 @@ public abstract class MeasurementView extends TableLayout {
             unsorted.add(new BMRMeasurementView(context));
             unsorted.add(new TDEEMeasurementView(context));
             unsorted.add(new EERMeasurementView(context));
+            unsorted.add(new TEEMeasurementView(context));
             unsorted.add(new CaloriesMeasurementView(context));
             unsorted.add(new CommentMeasurementView(context));
             unsorted.add(new UserMeasurementView(context));
